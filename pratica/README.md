@@ -6,3 +6,7 @@
 $ sudo systemctl start core-daemon.service
 $ sudo core-gui CC-Topo-2022.imn
 ```
+
+## tutorial progamacao em sockets
+
+[Tutorial](https://www.youtube.com/watch?v=DmrZyNiE6M4)
