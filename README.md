@@ -1,4 +1,4 @@
-# Repo praticas de CC
+# Repo# Repo praticas de CC
 
 ## comando para iniciar o core
 
@@ -6,3 +6,7 @@
 $ sudo systemctl start core-daemon.service
 $ sudo core-gui CC-Topo-2022.imn
 ```
+
+## tutorial progamacao em sockets
+
+[Tutorial](https://www.youtube.com/watch?v=DmrZyNiE6M4)
