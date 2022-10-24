@@ -1,0 +1,10 @@
+24-10-22 15:10:19    DEBUG This is a debug message
+24-10-22 15:10:19     INFO This is an info message
+24-10-22 15:10:19  WARNING This is a warning message
+24-10-22 15:10:19    ERROR This is an error message
+24-10-22 15:10:19 CRITICAL This is a critical message
+24-10-22 15:10:40    DEBUG 	This is a debug message
+24-10-22 15:10:40     INFO 	This is an info message
+24-10-22 15:10:40  WARNING 	This is a warning message
+24-10-22 15:10:40    ERROR 	This is an error message
+24-10-22 15:10:40 CRITICAL 	This is a critical message
