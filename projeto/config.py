@@ -43,14 +43,17 @@ class config:
             tokenLine.append(string)
             string = ""
             self.lines.append(tokenLine)
+            
+        self.process_lines()
 
+    
+    def process_lines(self):
+        for line in self.lines:
+            if line[1] == 'DB':
+                print("BASE DE DADOS")
+            if line[1] == 'DB':
+                print("BASE DE DADOS")
             
     def getlines(self):
         return self.lines
     
-
-
-        # else:
-        #     print(char,end="")
-
-    # details_dict = dict(config.)
