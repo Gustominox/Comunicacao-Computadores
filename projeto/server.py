@@ -1,19 +1,22 @@
-from debug_module import *
-from config import config
 import logging as log
 import socket
+import sys
 import threading
 import time
+
+from config import config
+from debug_module import *
 
 LOGFILE = '/tmp/server.log'
 
 
 class Server:
 
-    def __init__(self):
+    def __init__(self,server_type):
 
+        self.server_type = server_type
         innit_log(LOGFILE)
-        
+
         self.hostname = socket.gethostname()
         self.endereco = socket.gethostbyname(self.hostname)  # '10.0.0.1'
         self.porta = 3333
@@ -66,7 +69,19 @@ class Server:
 
         s.close()
 
-   
+    def send_tcp(self, endereco='127.0.0.1', porta=3333):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        s.connect((endereco, porta))
+
+        i = 0
+        while True and i < 10:
+            msg = f"Adoro Redes :) [{i}]"
+            s.sendall(msg.encode('utf-8'))
+            time.sleep(1)
+            i += 1
+
+        s.close()
 
     def config(self, filename):
         try:
@@ -77,7 +92,10 @@ class Server:
 
 
 def main():
-    server = Server()
+    
+    server_type = sys.argv[1]
+    
+    server = Server(server_type)
     server.config("./etc/sp.conf")
     debug(server.conf.getlines())
     server.run_tcp()
