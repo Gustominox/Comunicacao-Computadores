@@ -4,8 +4,14 @@ class config:
 
     def __init__(self):
         self.lines = []
-                
+        self.logFile = "NOLOGFILE"
         
+    def __str__(self):
+        string = "[ CONFIG FILE:\n"
+        for line in self.lines:
+            string = string + str(line) + "," + "\n"
+        string = string + "]"
+        return string
     def read(self,filename):
         
         uncutLines = []
@@ -58,25 +64,61 @@ class config:
             # no parâmetro (o servidor assume o papel de SP para este domínio)
             # e que passa a ter autorização para pedir a transmissão da
             # informação da base de dados (transferência de zona);
-            # podem existir várias entradas para o mesmo parâmetro (uma por cada SS do domínio)    
+            #
+            # Podem existir várias entradas para o mesmo parâmetro (uma por cada SS do domínio)    
             if line[1] == 'SS':
                 print("BASE DE DADOS")
             
             # DD – O valor indica o endereço IP[:porta] dum SR, dum SS ou dum SP do
             # domínio por defeito indicado no parâmetro; 
-            # quando os servidores que assumem o papel de SR usam este parâmetro é para indicar quais  
-            # os domínios para os quais devem contactar diretamente os  
-            # servidores indicados se receberem queries sobre estes domínios (quando 
-            # a resposta não está em cache), em vez de contactarem um dos ST; podem
-            # existir várias entradas para o mesmo parâmetro (uma por cada servidor 
-            # do domínio por defeito); quando os servidores que assumem o papel de 
-            # SP ou SS usam este parâmetro é para indicar os únicos domínios para 
-            # os quais respondem (quer a resposta esta em cache ou não), i.e., nestes 
-            # casos, o parâmetro serve para restringir o funcionamento dos SP ou 
-            # SS a responderem apenas a queries sobre os domínios indicados neste parâmetro
+            # 
+            # Quando os servidores que assumem o papel de SR usam este parâmetro é
+            # para indicar quais os domínios para os quais devem contactar diretamente
+            # os servidores indicados se receberem queries sobre estes domínios (quando 
+            # a resposta não está em cache), em vez de contactarem um dos ST;
+            # 
+            # Podem existir várias entradas para o mesmo parâmetro (uma por cada 
+            # servidor do domínio por defeito);
+            # 
+            # Quando os servidores que assumem o papel de SP ou SS usam este parâmetro
+            # é para indicar os únicos domínios para os quais respondem (quer a 
+            # resposta esta em cache ou não), i.e., nestes casos, o parâmetro serve 
+            # para restringir o funcionamento dos SP ou SS a responderem apenas a 
+            # queries sobre os domínios indicados neste parâmetro
             if line[1] == 'DD':
                 print("BASE DE DADOS")
             
+            # SP – o valor indica o endereço IP[:porta] do SP do domínio indicado 
+            # no parâmetro (o servidor assume o papel de SS para este domínio); 
+            if line[1] == 'SP':
+                print("BASE DE DADOS")
+            
+            # ST – o valor indica o ficheiro com a lista dos ST (o parâmetro
+            # deve ser igual a “root”); 
+            if line[1] == 'ST':
+                print("BASE DE DADOS")
+            
+            # LG – o valor indica o ficheiro de log que o servidor deve utilizar
+            # para registar a atividade do servidor associada ao domínio indicado 
+            # no parâmetro;
+            # 
+            # Só podem ser indicados domínios para o qual o servidor é SP ou SS; 
+            # 
+            # Tem de existir pelo menos uma entrada a referir um ficheiro de log 
+            # para toda a atividade que não seja diretamente  referente aos domínios
+            # especificados noutras entradas LG (neste caso o parâmetro deve ser 
+            # igual a “all”).
+            if line[1] == 'LG':
+                print("BASE DE DADOS")
+            
+            self.setLogFile(line[2])
+            
+    def getLogFile(self):
+        return self.logFile
+        
+    def setLogFile(self,new_name):
+        self.logFile = new_name
+        
     def getlines(self):
         return self.lines
     
