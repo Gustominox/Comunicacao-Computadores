@@ -7,15 +7,12 @@ import time
 from config import config
 from debug_module import *
 
-LOGFILE = '/tmp/server.log'
-
 
 class Server:
 
-    def __init__(self,server_type):
+    def __init__(self, server_type):
 
         self.server_type = server_type
-        innit_log(LOGFILE)
 
         self.hostname = socket.gethostname()
         self.endereco = socket.gethostbyname(self.hostname)  # '10.0.0.1'
@@ -92,12 +89,13 @@ class Server:
 
 
 def main():
-    
+
     server_type = sys.argv[1]
-    
+
     server = Server(server_type)
-    server.config("./etc/sp.conf")
-    debug(server.conf.getlines())
+    server.config("./etc/gusto.conf")
+    innit_log(server.conf.getLogFile)
+    debug(server.conf)
     server.run_tcp()
 
 
