@@ -1,0 +1,1 @@
+16-11-22 17:22:14:DEBUG   : [['gusto', 'DB', './var/dns/gusto.db'], ['gusto', 'SS', '10.1.1.1'], ['gusto', 'SS', '10.4.4.2:5353'], ['gusto', 'DD', '127.0.0.1'], ['gusto', 'LG', './var/dns/gusto.log'], ['all', 'LG', './var/dns/all.log']]
