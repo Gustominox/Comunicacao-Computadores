@@ -4,7 +4,7 @@ import sys
 import threading
 import time
 
-from config import Config
+from config_module import Config
 from debug_module import *
 
 event = threading.Event()
@@ -27,7 +27,7 @@ class Server:
 
     def run_udp(self):
 
-        soc = socket.socket(socket.AF_INET,     # Familia de aderecos ipv4
+        soc = socket.socket(socket.AF_INET,     # Familia de enderecos ipv4
                             socket.SOCK_DGRAM)  # Connection less (UDP PROTOCOL)
 
         soc.bind(('', self.porta))
@@ -35,13 +35,13 @@ class Server:
         debug(f"Estou à escuta no {self.endereco}:{self.porta}")
 
         while True:
-            msg, add = self.soc.recvfrom(1024)
+            msg, add = soc.recvfrom(1024)
             debug(f"MESSAGE RECEIVED: \"{msg.decode('utf-8')}\"")
             debug(f"Recebi uma mensagem do cliente {add}")
 
         self.soc.close()
 
-    def processamento(self, connection, address):
+    def getDBLine(self, connection, address):
         while True:
             msg = connection.recv(1024)
 
@@ -54,9 +54,9 @@ class Server:
         event.set()
         connection.close()
 
-    def run_tcp(self):
-        s = socket.socket(socket.AF_INET,     # Familia de aderecos ipv4
-                          socket.SOCK_STREAM)  # Connection-Oriented (UCP PROTOCOL)
+    def receive_DB(self):
+        s = socket.socket(socket.AF_INET,     # Familia de enderecos ipv4
+                          socket.SOCK_STREAM)  # Connection-Oriented (TCP PROTOCOL)
         
         s.bind(('', self.porta))
         s.listen()
@@ -66,7 +66,7 @@ class Server:
         while True:
             connection, address = s.accept()
 
-            threading.Thread(target=self.processamento, args=(
+            threading.Thread(target=self.getDBLine, args=(
                 connection, address)).start()
             if(event.wait()):
                 break    
@@ -100,24 +100,8 @@ class Server:
 
         s.close()
         
-    def receive_DB(self):
-        s = socket.socket(socket.AF_INET,     # Familia de aderecos ipv4
-                          socket.SOCK_STREAM)  # Connection-Oriented (UCP PROTOCOL)
-
-        s.bind(('', self.porta))
-        s.listen()
-
-        print(f"Estou à escuta Pela base de dados no {self.endereco}:{self.porta}")
-
-        while True:
-            connection, address = s.accept()
-
-            threading.Thread(target=self.processamento, args=(
-                connection, address)).start()
-
-        s.close()
-
-
+   
+      
 
     def readDataBase(self, DBfile):
 
@@ -156,10 +140,13 @@ def main():
     if server.server_type == "SP":
         server.readDataBase(server.getDBFile())
         debug(server.DB)
-        server.send_DB()
+        # server.send_DB()
     elif server.server_type == "SS":
-        server.run_tcp()
+        server.receive_DB()
         debug(server.DB)
+    elif server.server_type == "SR":
+        server.run_udp()
+        
         
 
 
