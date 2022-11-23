@@ -74,7 +74,7 @@ class Server:
         
         s.close()
     
-    def send_tcp(self, endereco='127.0.0.1', porta=3333):
+    def send_tcp_test(self, endereco='127.0.0.1', porta=3333):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         s.connect((endereco, porta))
