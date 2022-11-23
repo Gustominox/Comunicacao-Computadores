@@ -1,10 +1,14 @@
 import logging as log
 
-class config:
+class Config:
 
-    def __init__(self):
+    def __init__(self,file_name):
         self.lines = []
         self.logFile = "NOLOGFILE"
+        self.DBFile = "NODBFILE"
+        
+        self.read(file_name)
+        
         
     def __str__(self):
         string = "[ CONFIG FILE:\n"
@@ -59,6 +63,9 @@ class config:
             # do domínio indicado no parâmetro
             if line[1] == 'DB':     
                 print("BASE DE DADOS")
+                self.setDBFile(line[2])
+                
+                 
                 
             # SS - O valor indica o endereço IP[:porta] dum SS do domínio indicado
             # no parâmetro (o servidor assume o papel de SP para este domínio)
@@ -110,7 +117,7 @@ class config:
             # igual a “all”).
             if line[1] == 'LG':
                 print("BASE DE DADOS")
-            
+        
             self.setLogFile(line[2])
             
     def getLogFile(self):
@@ -118,6 +125,13 @@ class config:
         
     def setLogFile(self,new_name):
         self.logFile = new_name
+        
+        
+    def getDBFile(self):
+        return self.DBFile
+        
+    def setDBFile(self,new_name):
+        self.DBFile = new_name
         
     def getlines(self):
         return self.lines
