@@ -13,19 +13,4 @@ def logLevel(level):
 
     return levels.get(level,0)    
 
-# logging.basicConfig(level=logLevel(1),
-#                     format='%(asctime)s %(levelname)8s \t%(message)s',
-#                     filename='./myapp.log',
-#                     filemode='w',
-#                     datefmt='%d-%m-%y %H:%M:%S')
 
-
-# argv = sys.argv[1:]
-
-# logging.debug('This is a debug message')
-# logging.info('This is an info message')
-# logging.warning('This is a warning message')
-# logging.error('This is an error message')
-# logging.critical('This is a critical message')
-
-# print(logLevel(int(argv[0])))
