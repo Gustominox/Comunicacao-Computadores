@@ -89,7 +89,7 @@ class Cache:
                         "Status")
 
         self.table = [("Name", "Type", "Value", "TTL", "Order",
-                       "Origin", "TimeStamp", i, "FREE") for i in range(10)]
+                       "Origin", "TimeStamp", i, "FREE") for i in range(15)]
 
         # (a) parâmetro/Name,
         # (b) tipo do valor/Type,
@@ -134,19 +134,35 @@ class Cache:
 
     def __str__(self):
         output = "CACHE:\n"
+        
+        
         # Print cabecalho
+        j = 0 
         for header in self.headers:
-            output = output + "{:^11}".format(header) + "|"
-
+            
+            if j == 2:
+                output += "{:^17}".format(header) + "|"
+            else:
+                output += "{:^11}".format(header) + "|"
+            j += 1 
         output += "\n"
+         
         for i in range(9):
-            output += "{:^11}".format("---------") + "|"
-
+            if i == 2:
+                output += "{:^17}".format("---------------") + "|"
+            else:
+                output += "{:^11}".format("---------") + "|"
+                
         for line in self.table:
-            output = output + "\n"
-
+            output += "\n"
+            
+            j = 0
             for cell in line:
-                output = output + "{:11}".format(str(cell)) + "|"
+                if j == 2:
+                    output +=  " {:16}".format(str(cell)) + "|"
+                else:
+                    output += " {:10}".format(str(cell)) + "|"  
+                j += 1
 
         return output
 

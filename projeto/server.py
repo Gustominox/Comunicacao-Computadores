@@ -133,8 +133,6 @@ class Server:
 
         string = ""
 
-        
-
         for char in text:
             if char == '\n':
                 if not remove and string != "":
@@ -145,16 +143,16 @@ class Server:
                         if c == ' ' and subString != "":
                             values.append(subString)
                             subString = ""
-                        subString += c
-                        
-                        
-                            
+                        else:
+                            subString += c
+
                     current_time = datetime.now()
                     timeStamp = current_time - self.startTime
-                    
-                    self.DB.addEntry((values[0], values[1], values[2], "values[3]", "1",
-                                      "FILE", str(timeStamp.total_seconds())))
-                    uncutLines.append(string)
+                    # self.DB.addEntry(("Name", "Type", "Value", "TTL",
+                                    #   "1", "FILE", str(timeStamp.total_seconds())))
+
+                    self.DB.addEntry((values[0], values[1], values[2], values[3], "1",
+                      "FILE", str(timeStamp.total_seconds())))
                 string = ""
                 remove = False
                 continue
@@ -183,7 +181,7 @@ def main():
 
     if server.server_type == "SP":
         print(server.startTime)
-        time.sleep(3)
+        time.sleep(1)
         server.readDataBase(server.conf.getDBFile())
         print(server.DB)
 
