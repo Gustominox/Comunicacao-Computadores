@@ -62,8 +62,7 @@ class Config:
             # DB - O valor indica o ficheiro da base de dados com a informação 
             # do domínio indicado no parâmetro
             if line[1] == 'DB':     
-                print("BASE DE DADOS")
-                self.setDBFile(line[2])
+                self.DBFile = line[2]
                 
                  
                 
@@ -74,8 +73,7 @@ class Config:
             #
             # Podem existir várias entradas para o mesmo parâmetro (uma por cada SS do domínio)    
             if line[1] == 'SS':
-                print("BASE DE DADOS")
-            
+                continue
             # DD – O valor indica o endereço IP[:porta] dum SR, dum SS ou dum SP do
             # domínio por defeito indicado no parâmetro; 
             # 
@@ -93,17 +91,17 @@ class Config:
             # para restringir o funcionamento dos SP ou SS a responderem apenas a 
             # queries sobre os domínios indicados neste parâmetro
             if line[1] == 'DD':
-                print("BASE DE DADOS")
+                continue
             
             # SP – o valor indica o endereço IP[:porta] do SP do domínio indicado 
             # no parâmetro (o servidor assume o papel de SS para este domínio); 
             if line[1] == 'SP':
-                print("BASE DE DADOS")
+                continue
             
             # ST – o valor indica o ficheiro com a lista dos ST (o parâmetro
             # deve ser igual a “root”); 
             if line[1] == 'ST':
-                print("BASE DE DADOS")
+                continue
             
             # LG – o valor indica o ficheiro de log que o servidor deve utilizar
             # para registar a atividade do servidor associada ao domínio indicado 
@@ -116,23 +114,5 @@ class Config:
             # especificados noutras entradas LG (neste caso o parâmetro deve ser 
             # igual a “all”).
             if line[1] == 'LG':
-                print("BASE DE DADOS")
-        
-            self.setLogFile(line[2])
+                self.logFile = line[2]
             
-    def getLogFile(self):
-        return self.logFile
-        
-    def setLogFile(self,new_name):
-        self.logFile = new_name
-        
-        
-    def getDBFile(self):
-        return self.DBFile
-        
-    def setDBFile(self,new_name):
-        self.DBFile = new_name
-        
-    def getlines(self):
-        return self.lines
-    

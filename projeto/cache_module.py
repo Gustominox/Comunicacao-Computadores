@@ -87,9 +87,12 @@ class Cache:
                         "TimeStamp",   
                         "Index",
                         "Status")
+        
+        self.cacheSize = 25
+        self.cacheOccupancy = 0
 
-        self.table = [("Name", "Type", "Value", "TTL", "Order",
-                       "Origin", "TimeStamp", i, "FREE") for i in range(15)]
+        self.table = [("", "", "", "", "",
+                       "", "", i, "FREE") for i in range(self.cacheSize)]
 
         # (a) parâmetro/Name,
         # (b) tipo do valor/Type,
@@ -109,11 +112,14 @@ class Cache:
             for line in self.table:
                 if line[8] == "FREE":
                     self.table[i] = entry + (i, "VALID")
+                    self.cacheOccupancy += 1
                     break
                 i += 1
         else:
             if self.table[atIndex][8] == "FREE":
                 self.table[atIndex] = entry + (atIndex, "VALID")
+                self.cacheOccupancy += 1
+                
             else:
                 print("CACHE ERROR: INDEX ALREADY IN USE")
 
@@ -128,9 +134,14 @@ class Cache:
         i = 0
         for line in self.table:
             if i == atIndex:
-                self.table[i] = ("Name", "Type", "Value", "TTL",
-                                 "Order", "Origin", "TimeStamp", i, "FREE")
+                self.table[i] = ("", "", "", "",
+                                 "", "", "", i, "FREE")
             i += 1
+
+    def entryToString(self, entry):
+        return
+    def stringToEntry(self):
+        return
 
     def __str__(self):
         output = "CACHE:\n"
@@ -140,16 +151,16 @@ class Cache:
         j = 0 
         for header in self.headers:
             
-            if j == 2:
-                output += "{:^17}".format(header) + "|"
+            if j == 2 or j == 0:
+                output += "{:^26}".format(header) + "|"
             else:
                 output += "{:^11}".format(header) + "|"
             j += 1 
         output += "\n"
          
         for i in range(9):
-            if i == 2:
-                output += "{:^17}".format("---------------") + "|"
+            if i == 2 or i == 0:
+                output += "{:^26}".format("---------------") + "|"
             else:
                 output += "{:^11}".format("---------") + "|"
                 
@@ -158,8 +169,8 @@ class Cache:
             
             j = 0
             for cell in line:
-                if j == 2:
-                    output +=  " {:16}".format(str(cell)) + "|"
+                if j == 2 or j == 0:
+                    output +=  " {:25}".format(str(cell)) + "|"
                 else:
                     output += " {:10}".format(str(cell)) + "|"  
                 j += 1

@@ -189,10 +189,15 @@ class Pdu:
         return out
 
 # debug
-pdu = Pdu(pduText)
+def main():
+    pdu = Pdu(pduText)
 
-p = Pdu(str(pdu))
+    p = Pdu(str(pdu))
 
-print(p)
+    print(p)
+    
+if __name__ == "__main__":
+    main()
+
 
 
