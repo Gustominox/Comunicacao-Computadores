@@ -16,3 +16,6 @@ $ sudo core-gui CC-Topo-2022.imn
 [Relatório](https://docs.google.com/document/d/1N-J8ct-WkR4kMiXe48vnhXoaZJxpIakh-w3DeXupy48/edit#)
 
 [DNS RESULOTION](http://www.tcpipguide.com/free/t_DNSNameResolutionProcess-2.htm)
+
+
+[PYTHON CLIENT-SERVER SOCKET](https://realpython.com/python-sockets/)
