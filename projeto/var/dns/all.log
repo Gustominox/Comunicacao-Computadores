@@ -1,0 +1,29 @@
+10-12-22 11:43:32 None None Conexao Terminada
+10-12-22 11:43:32 None None CACHE:
+           Name           |   Type    |          Value           |    TTL    |   Order   |  Origin   | TimeStamp |   Index   |  Status   |
+     ---------------      | --------- |     ---------------      | --------- | --------- | --------- | --------- | --------- | --------- |
+ gusto.campos.            | SOASP     | ns1.example.com.         | 86400     | 0         | SP        | 0.001377  | 0         | VALID     |
+ gusto.campos.            | SOAADMIN  | dns\\.admin.example.com. | 86400     | 0         | SP        | 1.002697  | 1         | VALID     |
+ gusto.campos.            | SOASERIAL | 0117102022               | 86400     | 0         | SP        | 2.004206  | 2         | VALID     |
+ gusto.campos.            | SOAREFRESH| 14400                    | 86400     | 0         | SP        | 3.005513  | 3         | VALID     |
+ gusto.campos.            | SOARETRY  | 3600                     | 86400     | 0         | SP        | 4.007232  | 4         | VALID     |
+ gusto.campos.            | SOAEXPIRE | 604800                   | 86400     | 0         | SP        | 5.008466  | 5         | VALID     |
+ gusto.campos.            | NS        | ns1.example.com.         | 86400     | 0         | SP        | 6.00979   | 6         | VALID     |
+ gusto.campos.            | NS        | ns2.example.com.         | 86400     | 0         | SP        | 7.01091   | 7         | VALID     |
+ gusto.campos.            | NS        | ns3.example.com.         | 86400     | 0         | SP        | 8.012066  | 8         | VALID     |
+ gusto.campos.            | MX        | mx1.example.com          | 86400     | 10        | SP        | 9.012461  | 9         | VALID     |
+ gusto.campos.            | MX        | mx2.example.com          | 86400     | 20        | SP        | 10.013796 | 10        | VALID     |
+ ns1                      | A         | 193.136.130.250          | 86400     | 0         | SP        | 11.014872 | 11        | VALID     |
+ ns2                      | A         | 193.137.100.250          | 86400     | 0         | SP        | 12.016074 | 12        | VALID     |
+ ns3                      | A         | 193.136.130.251          | 86400     | 0         | SP        | 13.017465 | 13        | VALID     |
+ sp.smaller               | A         | 193.140.90.11            | 86400     | 0         | SP        | 14.019029 | 14        | VALID     |
+ mx1                      | A         | 193.136.130.200          | 86400     | 0         | SP        | 15.020552 | 15        | VALID     |
+ mx2                      | A         | 193.136.130.201          | 2400      | 100       | SP        | 16.022081 | 16        | VALID     |
+ www                      | A         | 193.136.130.80           | 86400     | 200       | SP        | 17.023371 | 17        | VALID     |
+ www                      | A         | 193.136.130.81           | 86400     | 200       | SP        | 18.02495  | 18        | VALID     |
+ ftp                      | A         | 193.136.130.20           | 86400     | 0         | SP        | 19.026369 | 19        | VALID     |
+ sp                       | CNAME     | ns1                      | 86400     | 0         | SP        | 20.027791 | 20        | VALID     |
+ ss1                      | CNAME     | ns2                      | 86400     | 0         | SP        | 21.029261 | 21        | VALID     |
+ ss2                      | CNAME     | ns3                      | 86400     | 0         | SP        | 22.03058  | 22        | VALID     |
+ mail1                    | CNAME     | mx1                      | 86400     | 0         | SP        | 23.031984 | 23        | VALID     |
+                          |           |                          |           |           |           |           | 24        | FREE      |

@@ -29,7 +29,7 @@ class Server:
 
         self.hostname = socket.gethostname()
         self.endereco = socket.gethostbyname(self.hostname)  # '10.0.0.1'
-        self.porta = 5555
+        self.porta = 55555
 
     def run_udp(self):
 
@@ -48,40 +48,22 @@ class Server:
 
         self.soc.close()
 
-    def getDBLine(self, socket):
-        while True:
-            msg = socket.recv(1024)
+  
 
-            if not msg:
-                debug("Conexao Terminada")
-                break
-            line = msg.decode('utf-8')
-            tuplo = tuple(map(str, line.replace('\'', '').replace(
-                '(', '').replace(')', '').split(', ')))
-
-            self.DB.addEntry(tuplo)
-
-        event.set()
-        socket.close()
-
-    def startTZ(self,endereco='127.0.0.1', porta=5555):
-        s = socket.socket(socket.AF_INET,     # Familia de enderecos ipv4
+    def startTZ(self,endereco='127.0.0.1', porta=55555):
+        soc = socket.socket(socket.AF_INET,     # Familia de enderecos ipv4
                           socket.SOCK_STREAM)  # Connection-Oriented (TCP PROTOCOL)
 
-        s.connect((endereco, porta))
-
-
-        ################################################################
+        soc.connect((endereco, porta))
 
         try:
 
-            s.sendall("REQUEST FOR TZ".encode('utf-8'))
-
+            soc.sendall("REQUEST FOR TZ".encode('utf-8'))
 
         except:
             debug("Impossivel Conectar")
         
-        msg = s.recv(1024)
+        msg = soc.recv(1024)
         line = msg.decode('utf-8')
 
         size = int(line)
@@ -90,36 +72,42 @@ class Server:
             debug("TZ IS TOO BIG")
             return
         else:
-            ################################################################
-
-            # s.bind(('', self.porta))
-            # s.listen()
-            s.sendall("OK TO SEND".encode('utf-8'))
-
+            
+            soc.sendall("OK TO SEND".encode('utf-8'))
 
             while True:
-                # connection, address = s.accept()
                 
-                self.getDBLine(s)
-                # threading.Thread(target=self.getDBLine, args=(
-                # connection, address)).start()
-                if(event.wait()):
+                msg = soc.recv(1024)
+                print(msg)
+                
+                if not msg or msg.decode('utf-8') == "END OF TRANSFER":
+                    debug("Conexao Terminada")
                     break
+                line = msg.decode('utf-8')
+                tuplo = tuple(map(str, line.replace('\'', '').replace(
+                    '(', '').replace(')', '').split(', ')))
 
-            s.close()
+                
+                current_time = datetime.now()
+                timeStamp = current_time - self.startTime
+                
+                self.DB.addEntry((tuplo[0], tuplo[1], tuplo[2], tuplo[3], tuplo[4],
+                                "SP", str(timeStamp.total_seconds())))
 
-    def answerTZ(self, endereco='127.0.0.1', porta=5555):
+                
+                # if(event.wait()):
+                #     break
+            soc.close()
+            
+        print("CLOSING SOCKET")    
+
+
+    def answerTZ(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         
-        s.bind(('', self.porta))
+        s.bind(('', self.porta))            
         s.listen()
 
-        
-
-        ################################################################
-        
-        
-        
         connection, address = s.accept()
         msg = connection.recv(1024)
         line = msg.decode('utf-8')
@@ -147,20 +135,25 @@ class Server:
                             tuplo = line[:-2]
                             
                             connection.sendall(str(tuplo).encode('utf-8'))
-                            time.sleep(0.01)
+                            time.sleep(1)
+                    connection.sendall('END OF TRANSFER'.encode('utf-8'))
 
 
                 except:
                     debug("Impossivel Conectar")
                     
-                s.close()
+                
             else:
                 debug("SS CANT RECEIVE TZ")
         else:
             debug("WRONG HANDSHAKE")
             
+        msg = connection.recv(1024)
+        line = msg.decode('utf-8')
+        print(line)    
+        s.close()
 
-    def send_tcp_test(self, endereco='127.0.0.1', porta=5555):
+    def send_tcp_test(self, endereco='127.0.0.1', porta=55555):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         s.connect((endereco, porta))
@@ -174,19 +167,7 @@ class Server:
 
         s.close()
 
-     # deprecated
-    # def startConnection(self,endereco='127.0.0.1', porta=5555):
-    #     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    #     try :
-    #         s.connect((endereco, porta))
-    #         msg = ""
-    #         s.sendall(line.encode('utf-8'))
-
-    #         s.close()
-
-    #     except: debug("Impossivel Conectar")
-
+    
     def readDataBase(self, DBfile):
 
         lines = []
@@ -254,12 +235,25 @@ class Server:
                             socket.SOCK_DGRAM)    # Connection less (UDP PROTOCOL)
         msg = str(pdu)
         try:
-            soc.sendto(msg.encode('utf-8'), (endereco, 5555))
+            soc.sendto(msg.encode('utf-8'), (endereco, 55555))
             debug("Mensagem enviada")
 
         except:
             exception("Impossivel enviar mensagem")
-
+    
+    def runTZ(self):
+        while True:
+          self.answerTZ()
+          print(self.DB)
+    
+    def start(self):
+        self.readDataBase(self.conf.DBFile)
+    
+        threading.Thread(target=self.runTZ()).start()
+        
+            
+            
+        
 
 def main():
 
@@ -268,12 +262,13 @@ def main():
     server = Server(server_type, "./etc/gusto.conf")
 
     if server.server_type == "SP":
+        server.start()
         time.sleep(1)
-        server.readDataBase(server.conf.DBFile)
+        
 
         print(server.DB)
 
-        server.answerTZ()
+        
     elif server.server_type == "SS":
 
         # server.startConnection()
